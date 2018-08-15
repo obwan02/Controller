@@ -46,7 +46,7 @@ def mouseCommand(data):
     x = data['x']
     y = data['y']
     print(x, y)
-    ctypes.windll.user.SetCursorPos(x, y)
+    ctypes.windll.user32.SetCursorPos(x, y)
     
 
 def keyboardCommand(data):
