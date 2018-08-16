@@ -40,14 +40,17 @@ class Command:
     def run(self):
         Command.commands[self.command](self.data)
 
-Command.commands = {'MOUSE' : lambda a: mouseCommand(a), 'KEYBOARD' : lambda a: keyboardCommand(a)}
+Command.commands = {'MOUSE_MOVE' : lambda a: mouseCommand(a), 'KEYBOARD' : lambda a: keyboardCommand(a), 'MOUSE_PRESS' : lambda a: mouseEventCommand(a)}
+
+def mouseEventCommand(data):
+    pass
+    
 
 def mouseCommand(data):
     x = data['x']
     y = data['y']
-    print(x, y)
     ctypes.windll.user32.SetCursorPos(x, y)
-    
+
 
 def keyboardCommand(data):
     print(data)
@@ -64,7 +67,9 @@ class ControllerHandler:
         command.run()
 
     def listen(self):
-        msg = self.sock.recv(2048)
+        lengthBytes = self.sock.recv(2)
+        length = int.from_bytes(msg, 'little')
+        msg = self.sock.recv(length)
         self.onMessageRecv(msg)
         
 
