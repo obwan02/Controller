@@ -68,7 +68,7 @@ class ControllerHandler:
 
     def listen(self):
         lengthBytes = self.sock.recv(2)
-        length = int.from_bytes(msg, 'little')
+        length = int.from_bytes(lengthBytes, 'little')
         msg = self.sock.recv(length)
         self.onMessageRecv(msg)
         
